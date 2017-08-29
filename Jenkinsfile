@@ -1,10 +1,15 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'bitwiseman/training-blueocean-sample'
+      args '-u root -v $HOME/.m2:/root/.m2'
+    }
+    
+  }
   stages {
-    stage('Hello') {
+    stage('Build') {
       steps {
-        sh 'echo "Hello World"'
-        archiveArtifacts ' target/*.war'
+        sh './jenkins/build.sh'
       }
     }
   }
